@@ -4,7 +4,10 @@ const withNextIntl = createNextIntlPlugin();
  
 /** @type {import('next').NextConfig} */
 const nextConfig = { 
-  output: "standalone",
+    output: 'standalone', // ✅ هذا هو المطلوب لنتلايفاي
+  images: {
+    unoptimized: true, // لتجنب مشاكل الصور أثناء النشر
+  },
 };
  
 

@@ -9,6 +9,7 @@
     "export": "next export"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.14.5",
     "axios": "^1.13.1",
     "keen-slider": "^6.8.6",
     "next": "15.5.4",
