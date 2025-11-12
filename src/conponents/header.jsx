@@ -12,30 +12,27 @@ import {
 } from "react-icons/fa";
 
 export default function Header() {
-  const phoneNumber = "0952684662"; // 🔹 Replace with your WhatsApp number
+  const phoneNumber = "0952684662"; 
   const message = "Hello! I’d like to know more about your services.";
   const [menuOpen, setMenuOpen] = useState(false);
   const [hasToken, setHasToken] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
-  // 🔄 تحديد اللغة الحالية واللغة الأخرى
+  // 🔄 اللغة الحالية
   const currentLocale = pathname.startsWith("/ar") ? "ar" : "en";
   const otherLocale = currentLocale === "ar" ? "en" : "ar";
 
-  // ✅ إنشاء الرابط الجديد مع استبدال اللغة في المسار
+  // ✅ إنشاء الرابط الجديد عند تبديل اللغة
   const newPath =
     pathname === `/${currentLocale}` || pathname === `/${currentLocale}/`
       ? `/${otherLocale}/`
       : pathname.replace(/^\/(ar|en)/, `/${otherLocale}`);
 
-  // 🧭 تغيير اتجاه الصفحة تلقائيًا مع اللغة
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.dir = currentLocale === "ar" ? "rtl" : "ltr";
       document.documentElement.lang = currentLocale;
-
-      // ✅ التحقق من وجود التوكن
       const token = localStorage.getItem("token");
       setHasToken(!!token);
     }
@@ -47,7 +44,6 @@ export default function Header() {
     router.push(`/${currentLocale}/`);
   };
 
-  // ✅ قائمة الروابط
   const navLinks = [
     { en: "Home", ar: "الرئيسية" },
     { en: "About", ar: "من نحن" },
@@ -82,8 +78,8 @@ export default function Header() {
               className="text-[var(--secondary-color-1)]"
               size={18}
             />
-            <div>
-              <p className="text-sm font-semibold">
+            <div className="mb-[-22px] md:mb-[0px]">
+              <p className="text-sm  font-semibold">
                 {currentLocale === "ar" ? "البريد الإلكتروني" : "Email"}
               </p>
               <p className="text-gray-600 text-sm">
@@ -105,24 +101,13 @@ export default function Header() {
 
           {/* زر التقديم */}
           <a
-        href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="border border-[var(--main-color)] text-[var(--main-color)] px-4 py-2 rounded-md font-semibold hover:bg-[var(--main-color)] cursor-pointer hover:text-white transition"
-      >
-        {currentLocale === "ar" ? "قدّم الآن" : "Apply Now"}
-      </a>
-
-
-
-
-          {/* مبدّل اللغة */}
-          <Link
-            href={newPath}
-            className="border border-[var(--main-color)] text-[var(--main-color)] px-4 py-2 rounded-md font-semibold hover:bg-[var(--main-color)] hover:text-white transition"
+            href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border hidden md:block border-[var(--main-color)] text-[var(--main-color)] px-4 py-2 rounded-md font-semibold hover:bg-[var(--main-color)] cursor-pointer hover:text-white transition"
           >
-            {otherLocale === "ar" ? "العربية" : "English"}
-          </Link>
+            {currentLocale === "ar" ? "قدّم الآن" : "Apply Now"}
+          </a>
         </div>
       </div>
 
@@ -158,25 +143,20 @@ export default function Header() {
               </Link>
             );
           })}
-          {!hasToken ? (
-          ""
-          ) : (
-            <Link
-            href={'/ar/admin'}
-           
-            className={`cursor-pointer hover:text-[var(--secondary-color-1)] transition ${
-                "text-[var(--secondary-color-1)]"
-            }`}
-          >
-            لوحة التحكم
-          </Link>
-          )}
 
+          {hasToken && (
+            <Link
+              href={`/${currentLocale}/admin`}
+              className="cursor-pointer hover:text-[var(--secondary-color-1)] transition"
+            >
+              {currentLocale === "ar" ? "لوحة التحكم" : "Dashboard"}
+            </Link>
+          )}
         </ul>
 
-        {/* ///////////////////////// */}
-                  {/* ✅ زر تسجيل الدخول / الخروج */}
-                  {!hasToken ? (
+        {/* ✅ زر تسجيل الدخول / الخروج + تبديل اللغة */}
+        <div className="flex items-center gap-3 w-full md:w-auto justify-between ">
+          {!hasToken ? (
             <Link
               href={`/${currentLocale}/login`}
               className="border border-[var(--secondary-color-1)] text-[var(--secondary-color-1)] px-4 py-2 rounded-md font-semibold hover:bg-[var(--secondary-color-1)] hover:text-white transition"
@@ -192,18 +172,27 @@ export default function Header() {
             </button>
           )}
 
-        {/* زر القائمة للموبايل */}
-        <button
-          className="md:hidden text-white text-xl"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <FaTimes /> : <FaBars />}
-        </button>
+          {/* 🔘 زر تبديل اللغة الجديد */}
+          <Link
+            href={newPath}
+            className="border border-white px-3 py-2 rounded-md font-semibold hover:bg-white hover:text-[var(--main-color)] transition"
+          >
+            {currentLocale === "ar" ? "English" : "العربية"}
+          </Link>
+
+          {/* زر القائمة للموبايل */}
+          <button
+            className="md:hidden text-white text-xl"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
 
         {/* قائمة الموبايل */}
         {menuOpen && (
           <div
-            className={`absolute top-full left-0 w-full bg-[#0c1022] border-t border-gray-700 flex flex-col items-start px-6 py-4 space-y-3 md:hidden z-50 ${
+            className={`absolute top-full left-0 w-full bg-[var(--main-color)] border-t border-gray-700 flex flex-col items-start px-6 py-4 space-y-3 md:hidden z-50 ${
               currentLocale === "ar" ? "text-right" : "text-left"
             }`}
           >
@@ -232,38 +221,14 @@ export default function Header() {
               );
             })}
 
-{!hasToken ? (
-          ""
-          ) : (
-            <Link
-            href={'/ar/admin'}
-           
-            className={`cursor-pointer hover:text-[var(--secondary-color-1)] transition ${
-                "text-[var(--secondary-color-1)]"
-            }`}
-          >
-            لوحة التحكم
-          </Link>
-          )}
-
-
-
-            {/* ✅ زر تسجيل الدخول/الخروج في الموبايل */}
-            {/* {!hasToken ? (
+            {hasToken && (
               <Link
-                href={`/${currentLocale}/login`}
-                className="block w-full text-center border border-[var(--secondary-color-1)] text-[var(--secondary-color-1)] py-2 rounded-md font-semibold hover:bg-[var(--secondary-color-1)] hover:text-white transition"
+                href={`/${currentLocale}/admin`}
+                className="cursor-pointer hover:text-[var(--secondary-color-1)] transition"
               >
-                {currentLocale === "ar" ? "تسجيل الدخول" : "Login"}
+                {currentLocale === "ar" ? "لوحة التحكم" : "Dashboard"}
               </Link>
-            ) : (
-              <button
-                onClick={handleLogout}
-                className="block w-full text-center border border-red-500 text-red-500 py-2 rounded-md font-semibold hover:bg-red-500 hover:text-white transition"
-              >
-                {currentLocale === "ar" ? "تسجيل الخروج" : "Logout"}
-              </button>
-            )} */}
+            )}
           </div>
         )}
       </nav>

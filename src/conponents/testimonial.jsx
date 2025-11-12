@@ -1,11 +1,13 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { coursesServis } from "@/services/coursesServis";
 import StudentTestimonials from "./testimonialSlider";
 import { useLocale } from "next-intl";
+import CodeLoader from "./codeLoader";
+
 export default function CoursesWithFeedback() {
-  const local = useLocale()
+  const locale = useLocale();
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [loadingCourses, setLoadingCourses] = useState(true);
@@ -16,6 +18,10 @@ export default function CoursesWithFeedback() {
       try {
         const data = await coursesServis.getAll();
         setCourses(data);
+        if (data.length > 0) {
+          // 🔹 تعيين أول كورس بشكل افتراضي كمختار
+          setSelectedCourse(data[0]);
+        }
       } catch (err) {
         console.error("حدث خطأ أثناء جلب الكورسات:", err);
       } finally {
@@ -30,13 +36,14 @@ export default function CoursesWithFeedback() {
       <div className="max-w-6xl mx-auto px-6 text-center">
         {/* العنوان */}
         <h2 className="text-3xl font-bold text-gray-800 mb-8">
-            {local === 'ar' ? "اختر كورس لعرض تقييمات الطلاب" : "select course to show feedback students"}
-          
+          {locale === "ar"
+            ? "اختر كورس لعرض تقييمات الطلاب"
+            : "Select a course to view student feedback"}
         </h2>
 
         {/* 🔹 قائمة الكورسات */}
         {loadingCourses ? (
-          <p className="text-gray-500">{local === 'ar' ? "جارٍ تحميل الكورسات..." : "couses loading..."}</p>
+         <CodeLoader/>
         ) : (
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {courses.map((course) => (
@@ -49,7 +56,7 @@ export default function CoursesWithFeedback() {
                     : "border-gray-300 text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                {local === 'ar' ? course.nameAr : course.nameEn}
+                {locale === "ar" ? course.nameAr : course.nameEn}
               </button>
             ))}
           </div>
@@ -59,7 +66,9 @@ export default function CoursesWithFeedback() {
         {selectedCourse && (
           <div>
             <h3 className="text-2xl font-semibold text-[var(--main-color)] mb-8">
-              {local === 'ar' ? "تقييمات الطلاب لكورس:" : "feedback students"} {local === 'ar' ? selectedCourse.nameAe : selectedCourse.nameEn}
+              {locale === "ar"
+                ? `تقييمات الطلاب لكورس: ${selectedCourse.nameAr}`
+                : `Student feedback for: ${selectedCourse.nameEn}`}
             </h3>
             <StudentTestimonials courseId={selectedCourse.id} />
           </div>

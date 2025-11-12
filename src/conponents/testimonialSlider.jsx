@@ -6,6 +6,7 @@ import { feedbackSrvis } from "@/services/feedbackServis";
 import avatar from "../assest/avatar.png";
 import { FaQuoteLeft } from "react-icons/fa";
 import { useLocale } from "next-intl";
+import CodeLoader from "./codeLoader";
 
 export default function StudentTestimonials({ courseId }) {
   const locale = useLocale();
@@ -43,7 +44,7 @@ export default function StudentTestimonials({ courseId }) {
 
         {/* قائمة التعليقات */}
         {loading ? (
-          <p className="text-gray-500 text-center">جاري التحميل...</p>
+          <CodeLoader/>
         ) : testimonials.length === 0 ? (
           <p className="text-gray-500 text-center col-span-3">
             {isArabic ? "لا توجد تقييمات بعد." : "No feedback yet."}
