@@ -266,6 +266,35 @@
           "exists": "This email is already registered.",
           "success": "Registered successfully!",
           "invalid": "Invalid login credentials."
+        },
+
+
+
+
+        "FAQ": {
+          "title": "Frequently Asked Questions",
+          "subtitle": "Common questions about our online programming and design academy",
+      
+          "q1": "Why do I need a website or application?",
+          "a1": "A website or application helps you reach more customers, build your brand, and automate your business processes efficiently.",
+      
+          "q2": "What services does your platform provide?",
+          "a2": "We provide high-quality online courses in programming, design, UI/UX, front-end, back-end, and modern web development tools.",
+      
+          "q3": "What makes programming and design important?",
+          "a3": "Programming and design are among the most in-demand skills globally and can help you build a stable income through freelancing, remote jobs, and full-time positions.",
+      
+          "q4": "How can your courses help me earn money?",
+          "a4": "Our courses teach real practical skills with projects that qualify you for job opportunities and freelance work, helping you build a profitable career.",
+      
+          "q5": "Why should I register with you?",
+          "a5": "We offer protected online courses, expert trainers, continuous guidance, assignments, and project-based learning to ensure real progress and skill development.",
+      
+          "q6": "Are the courses suitable for beginners?",
+          "a6": "Yes! Our training path starts from the basics until advanced levels, with easy explanations and step-by-step guidance.",
+      
+          "q7": "Do you offer certificates?",
+          "a7": "Yes, we provide completion certificates to support your portfolio and help you stand out in job applications."
         }
       
       

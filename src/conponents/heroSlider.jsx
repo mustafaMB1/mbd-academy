@@ -6,9 +6,12 @@ import {useTranslations} from 'next-intl';
 export default function HeroSlider() {
   const t = useTranslations('Home')
   const [current, setCurrent] = useState(0);
+  const phoneNumber = "0952684662"; 
+
 const slides = [
   {
     id: 1,
+    message : "أريد ان استفسر عن الكورسات التي تقدمونها",
     title: t('titleslide1'),
     desc: t("descslide1"),
     btnText: t("btnTextslide1"),
@@ -16,6 +19,7 @@ const slides = [
   },
   { 
     id: 2,
+    message : "أريد ان ابني موقع الكتروني ممكن مساعدة؟",
     title: t('titleslide2'),
     desc: t("descslide2"),
     btnText: t("btnTextslide2"),
@@ -23,7 +27,7 @@ const slides = [
   },
 ];
 
-
+ 
   // Auto slide
   useEffect(() => {
     const timer = setInterval(() => {
@@ -55,9 +59,14 @@ const slides = [
                 {slide.title}
               </h1>
               <p className="text-lg text-white capitalize md:text-xl mb-6">{slide.desc}</p>
-              <button className="bg-[var(--main-color)] hover:bg-[var(--main-color)] text-white px-6 py-3 rounded-full text-lg transition">
-                {slide.btnText}
-              </button>
+              <a
+            href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(slide.message)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[var(--main-color)] hover:bg-[var(--main-color)] text-white px-6 py-3 rounded-full text-lg transition"
+          >
+            {slide.btnText}
+          </a>
             </div>
           </div>
         </div>

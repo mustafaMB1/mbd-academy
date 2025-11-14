@@ -6,6 +6,7 @@ import Intro from '@/conponents/intro';
 import WhatWeOffer from '@/conponents/offer';
 import Trainers from '@/conponents/trainers';
 import CoursesWithFeedback from '@/conponents/testimonial';
+import FAQSection from '@/conponents/faqSection';
  
 export default function HomePage() {
   return (
@@ -13,6 +14,7 @@ export default function HomePage() {
       <HeroSlider/>
       <FeaturesSection/>
       <WhatWeOffer/>
+      <FAQSection/>
       <Intro/>
       <CoursesSection/>
       <Trainers/>

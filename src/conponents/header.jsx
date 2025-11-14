@@ -18,7 +18,7 @@ export default function Header() {
   const [hasToken, setHasToken] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-
+ 
   // 🔄 اللغة الحالية
   const currentLocale = pathname.startsWith("/ar") ? "ar" : "en";
   const otherLocale = currentLocale === "ar" ? "en" : "ar";
@@ -95,7 +95,7 @@ export default function Header() {
               <p className="text-sm font-semibold">
                 {currentLocale === "ar" ? "اتصل بنا" : "Call"}
               </p>
-              <p className="text-gray-600 text-sm">+963 991 519 824</p>
+              <p className="text-gray-600 text-sm">+963 952 684 662</p>
             </div>
           </div>
 
