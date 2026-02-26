@@ -1,6 +1,6 @@
 "use client";
 import { FloatingWhatsApp } from "react-floating-whatsapp";
-import avatar from "@/../public/avatar.png";
+import avatar from "../../public/avatar.png";
 
 export default function WhatsAppFloat() {
   return (

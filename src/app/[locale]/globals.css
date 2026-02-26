@@ -1,8 +1,194 @@
 @import "tailwindcss";
 
+/* =========================================
+   🎨 ROOT VARIABLES
+========================================= */
 :root {
-  --secondary-color-2: #9810fa;
-  --secondary-color-1: #0b8792;
-  --main-color : #0e202f;
+  /* BACKGROUNDS */
+  --bg-primary: #070A16;
+  --bg-secondary: #0D1224;
+  --bg-surface: #12172A;
+  --bg-glass: rgba(255, 255, 255, 0.04);
+
+  /* BRAND COLORS */
+  --color-primary: #c83ade;   /* Fuchsia */
+  --color-secondary: #6a3fcf; /* Purple */
+  --color-accent: #22D3EE;    /* Cyan */
+
+  /* GRADIENT FROM LEFT */
+  --gradient-primary: linear-gradient(
+    to right,
+    #D946EF 0%,
+    #8B5CF6 50%,
+    #1dbdd5 100%
+  );
+
+  --gradient-soft: linear-gradient(
+    to right,
+    rgba(217, 70, 239, 0.25),
+    rgba(34, 211, 238, 0.25)
+  );
+
+  /* TEXT */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --text-muted: rgba(255, 255, 255, 0.5);
+
+  /* BORDERS */
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  /* SHADOWS */
+  --shadow-glow-primary: 0 0 40px rgba(217, 70, 239, 0.35);
+  --shadow-glow-accent: 0 0 40px rgba(34, 211, 238, 0.35);
 }
 
+/* =========================================
+   🌑 BASE STYLES
+========================================= */
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Subtle dotted background (like crypto sites) */
+.bg-dots {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.3) 1px,
+    transparent 0
+  );
+  background-size: 18px 18px;
+  opacity: 0.05;
+}
+
+/* =========================================
+   🔘 BUTTONS
+========================================= */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-glow-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-glow-accent);
+  transform: translateY(-2px);
+}
+
+/* Outline Button */
+.btn-outline {
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--border-light);
+  padding: 12px 24px;
+  border-radius: 14px;
+  transition: 0.3s ease;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-accent);
+  background: rgba(34, 211, 238, 0.08);
+}
+
+/* =========================================
+   📦 CARDS
+========================================= */
+.card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 24px;
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-5px);
+}
+
+/* =========================================
+   🧭 NAVBAR GLASS STYLE
+========================================= */
+.navbar-glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* =========================================
+   ✨ GRADIENT TEXT
+========================================= */
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================================
+   🔥 ANIMATED GRADIENT (OPTIONAL)
+========================================= */
+.animated-gradient {
+  background: var(--gradient-primary);
+  background-size: 200% 200%;
+  animation: gradientMove 6s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: left center; }
+  50% { background-position: right center; }
+  100% { background-position: left center; }
+}
+
+/* =========================================
+   💡 GLOW ELEMENT
+========================================= */
+.glow-primary {
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.glow-accent {
+  box-shadow: var(--shadow-glow-accent);
+}
+
+/* =========================================
+   🌀 BLOB BACKGROUND
+========================================= */
+.blob {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: var(--gradient-primary);
+  filter: blur(120px);
+  opacity: 0.25;
+  border-radius: 50%;
+}
+
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp .55s ease both;
+}
+
+/* Hide scrollbar but keep scroll */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}

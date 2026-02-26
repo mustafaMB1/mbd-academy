@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import aboutImage from "../../../assest/logo.jpg"; // ضع هنا الصورة التي أنشأتها
+import aboutImage from "../../../assest/logo.jpg";
 import { FaBookOpen, FaGlobe, FaUsers } from "react-icons/fa";
 import { MdInstallMobile } from "react-icons/md";
+
+
 
 export default function AboutPage() {
   const t = useTranslations("About");
@@ -54,16 +56,24 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             {t("title")}
           </h2>
-          <p className="text-gray-600 leading-relaxed mb-6">{t("description1")}</p>
-          <p className="text-gray-600 leading-relaxed">{t("description2")}</p>
+          <p className="text-gray-600 leading-relaxed mb-6">
+            {t("description1")}
+          </p>
+          <p className="text-gray-600 leading-relaxed">
+            {t("description2")}
+          </p>
         </div>
       </div>
 
       {/* ===== القسم الثاني: خدماتنا ===== */}
       <div className="bg-[var(--secondary-color-2)]/5 py-20">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">{t("services.title")}</h2>
-          <p className="text-gray-600 mb-12 max-w-2xl mx-auto">{t("services.subtitle")}</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            {t("services.title")}
+          </h2>
+          <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
+            {t("services.subtitle")}
+          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {services.map((srv) => (
@@ -72,7 +82,9 @@ export default function AboutPage() {
                 className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-all duration-300"
               >
                 <div className="flex justify-center mb-4">{srv.icon}</div>
-                <h3 className="text-lg font-semibold mb-2 text-gray-900">{srv.title}</h3>
+                <h3 className="text-lg font-semibold mb-2 text-gray-900">
+                  {srv.title}
+                </h3>
                 <p className="text-gray-600 text-sm">{srv.desc}</p>
               </div>
             ))}

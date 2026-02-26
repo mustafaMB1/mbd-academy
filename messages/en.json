@@ -5,38 +5,52 @@
     "switch": "العربية"
   },
   "Home": {
-    "title": "Welcome to Our Website",
-    "description": "Learn and build amazing web applications with us!",
-    "titleslide1": "Learn Programming Online",
-    "descslide1": "Join our online courses and master programming languages like JavaScript and React. Start learning anytime, anywhere with expert mentors and real-world projects.",
-    "btnTextslide1": "Explore Courses",
+    "heroBadge": "Modern UI with a futuristic look and a strong user experience",
+    "heroSecondaryBtn": "Next slide",
+    "heroMiniLabel": "Current inquiry",
+    "heroRightBadge": "Learn in a",
 
-    "titleslide2": "Build Your Website and App for Business Success",
-    "descslide2": "We design and develop modern, responsive websites and apps that help your business grow and reach more customers online.",
-    "btnTextslide2": "Start Your Project"
+    "titleslide1": "Start your learning journey with top courses",
+    "descslide1": "Pick the right course for you with a clear roadmap, continuous support, and a modern learning experience.",
+    "btnTextslide1": "Ask about courses",
+
+    "titleslide2": "Turn your idea into a professional website",
+    "descslide2": "We can help you build a website or a full system from design to launch — with options that fit your budget.",
+    "btnTextslide2": "Get help building a site"
   },
+
 
 
   "features": {
+    "badge": "Why choose us",
+    "title": "Features that make learning easier",
+    "subtitle": "A modern experience with clear structure, guidance, and strong outcomes.",
+    "imageBadge": "Meet your mentor",
+    "progress": "Feature {current} of {total}",
     "cards": [
       {
-        "title": "Professional Instructors",
-        "desc": "We provide a team of professional instructors with solid real-world experience."
+        "tag": "Expert Trainers",
+        "title": "Professional instructors",
+        "desc": "Learn from experienced trainers with a clear roadmap and real projects."
       },
       {
-        "title": "Practical Projects",
-        "desc": "Students build projects from scratch to mastery, preparing them to enter the job market."
+        "tag": "Student Support",
+        "title": "Guided learning path",
+        "desc": "Support and follow-up to keep you on track from start to finish."
       },
       {
-        "title": "Continuous Student Support",
-        "desc": "We provide advice and guidance to help students build strong portfolios and real CVs."
+        "tag": "Practical Content",
+        "title": "Structured curriculum",
+        "desc": "Organized modules, exercises, and clear outcomes for each stage."
       },
       {
-        "title": "Affordable Prices",
-        "desc": "We offer high-value courses at competitive and well-studied prices."
+        "tag": "Certificates",
+        "title": "Achievement & certification",
+        "desc": "Earn proof of progress and a certificate that reflects real skill growth."
       }
     ]
-  },
+  }
+,
 
   "WhatWeOffer": {
     "title": "What We Offer",
@@ -113,7 +127,7 @@
       "subscribeTitle": "Subscribe Us!",
       "emailPlaceholder": "Enter email address",
       "subscribeBtn": "Subscribe",
-      "connectTitle": "Connect With Us",
+      "connectTitle": "Follow us",
   
       "rights": "All rights reserved",
       "madeBy": "This template is made with  by MBD ACADEMY"

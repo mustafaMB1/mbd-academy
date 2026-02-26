@@ -2,7 +2,7 @@ import { trainersSrvis } from "@/services/trainersServis";
 import { getLocale, getTranslations } from "next-intl/server";
 import SliderData from "./trainerSlider";
 
-export default async function Trainers() {
+export default async function Trainers({isMargin}) {
   const locale = await getLocale();
   const isArabic = locale === "ar";
   const t = await getTranslations("Trainers");
@@ -17,7 +17,7 @@ export default async function Trainers() {
 
   if (!trainers || trainers.length === 0) {
     return (
-      <section className="py-20 md:mt-[166px] text-center">
+      <section className="py-20  text-center">
         <h2 className="text-2xl text-gray-600">
           {isArabic ? "لا يوجد مدربون بعد" : "No trainers found."}
         </h2>
@@ -26,7 +26,7 @@ export default async function Trainers() {
   }
 
   return (
-    <section className="py-20 md:mt-[166px] bg-gray-50 text-center">
+    <section className={`py-20 ${isMargin ? "md:mt-[169px]" : ""} bg-gray-50 text-center`}>
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
           {t("title")}

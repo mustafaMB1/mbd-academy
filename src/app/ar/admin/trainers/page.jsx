@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { trainersSrvis } from "@/services/trainersServis";
 import { specialitisSrvis } from "@/services/specialitiesServis";
 import Image from "next/image";
-import defImage from "./default.png";
 
 export default function TrainersPage() {
   const [trainers, setTrainers] = useState([]);
@@ -237,7 +236,7 @@ export default function TrainersPage() {
               <tr key={trainer.id} className="border-b hover:bg-gray-50">
                 <td className="py-2 px-4 text-center">
                   <Image
-                    src={trainer.imageUrl || defImage}
+                    src={trainer.imageUrl}
                     alt={trainer.nameAr}
                     width={100}
                     height={100}

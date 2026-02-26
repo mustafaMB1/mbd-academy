@@ -1,23 +1,23 @@
-import RecentBlog from '@/conponents/recentBlog';
-import CoursesSection from '@/conponents/courses';
-import FeaturesSection from '@/conponents/featuersGrid';
-import HeroSlider from '@/conponents/heroSlider';
-import Intro from '@/conponents/intro';
-import WhatWeOffer from '@/conponents/offer';
-import Trainers from '@/conponents/trainers';
-import CoursesWithFeedback from '@/conponents/testimonial';
-import FAQSection from '@/conponents/faqSection';
- 
+import RecentBlog from '@/components/recentBlog';
+import CoursesSection from '@/components/courses';
+import FeaturesSection from '@/components/featuersGrid';
+import HeroSection from '@/components/heroSlider';
+import Intro from '@/components/intro';
+import WhatWeOffer from '@/components/offer';
+import Trainers from '@/components/trainers';
+import CoursesWithFeedback from '@/components/testimonial';
+import FAQSection from '@/components/faqSection';
+  
 export default function HomePage() {
   return (
     <>
-      <HeroSlider/>
+      <HeroSection/>
       <FeaturesSection/>
       <WhatWeOffer/>
       <FAQSection/>
       <Intro/>
       <CoursesSection/>
-      <Trainers/>
+      <Trainers isMargin={false}/>
       <RecentBlog/>
       <CoursesWithFeedback/>
     </>

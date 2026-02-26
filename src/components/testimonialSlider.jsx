@@ -75,7 +75,7 @@ export default function StudentTestimonials({ courseId }) {
                   </p> */}
 
                   <h3 className="text-lg font-semibold text-[var(--secondary-color-2)]">
-                    {item.email || "مستخدم مجهول"}
+                    {item.fullName || "مستخدم مجهول"}
                   </h3>
 
                 </div>

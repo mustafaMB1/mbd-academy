@@ -8,7 +8,7 @@ import { FaPlus, FaTrash, FaStar, FaEdit } from "react-icons/fa";
 export default function FeedbackDashboardPage() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [selectedCourse, setSelectedCourse] = useState(""); // 🔹 لتحديد الكورس
+  const [selectedCourse, setSelectedCourse] = useState("");
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -20,9 +20,11 @@ export default function FeedbackDashboardPage() {
     commentEn: "",
     commentAr: "",
     email: "",
+    fullName: "",
+    userId: null,
   });
 
-  // 📦 تحميل قائمة الكورسات فقط بالبداية
+  // 📦 تحميل الكورسات عند البداية
   useEffect(() => {
     fetchCourses();
   }, []);
@@ -36,7 +38,7 @@ export default function FeedbackDashboardPage() {
     }
   };
 
-  // 🔹 تحميل التقييمات الخاصة بكورس محدد
+  // 📌 تحميل التقييمات بناءً على الكورس
   const fetchFeedbacks = async (courseId) => {
     if (!courseId) {
       setFeedbacks([]);
@@ -46,7 +48,6 @@ export default function FeedbackDashboardPage() {
     try {
       const data = await feedbackSrvis.getAllForCourse(courseId);
       setFeedbacks(data);
-      console.log(data);
     } catch (err) {
       console.error("❌ Failed to load feedbacks:", err);
     } finally {
@@ -60,6 +61,7 @@ export default function FeedbackDashboardPage() {
     try {
       const dataToSend = { ...formData, userId: null };
       await feedbackSrvis.createOne(dataToSend);
+
       setShowForm(false);
       setFormData({
         courseId: "",
@@ -67,14 +69,17 @@ export default function FeedbackDashboardPage() {
         commentEn: "",
         commentAr: "",
         email: "",
+        fullName: "",
+        userId: null,
       });
+
       if (selectedCourse) fetchFeedbacks(selectedCourse);
     } catch (err) {
       console.error("❌ Failed to create feedback:", err);
     }
   };
 
-  // 🟡 تعديل تقييم
+  // ✏️ تعبئة نموذج التعديل
   const handleEdit = (feedback) => {
     setSelectedFeedback(feedback);
     setFormData({
@@ -82,18 +87,23 @@ export default function FeedbackDashboardPage() {
       rating: feedback.rating,
       commentEn: feedback.commentEn || "",
       commentAr: feedback.commentAr || "",
-      email: feedback.email,
+      email: feedback.email || "",
+      fullName: feedback.fullName || "",
+      userId: feedback.userId || null,
     });
     setShowEditForm(true);
   };
 
+  // 🟡 تعديل تقييم
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       await feedbackSrvis.updateOne(selectedFeedback.id, formData);
       setShowEditForm(false);
       setSelectedFeedback(null);
+
       if (selectedCourse) fetchFeedbacks(selectedCourse);
+
       alert("✅ تم تعديل التقييم بنجاح");
     } catch (err) {
       console.error("❌ Failed to update feedback:", err);
@@ -101,14 +111,14 @@ export default function FeedbackDashboardPage() {
     }
   };
 
-  // 🔴 حذف تقييم
+  // 🔴 حذف
   const handleDelete = async (id) => {
-    if (!confirm("هل أنت متأكد من حذف هذا التقييم؟")) return;
+    if (!confirm("هل أنت متأكد من الحذف؟")) return;
     try {
       await feedbackSrvis.deleteOne(id);
       if (selectedCourse) fetchFeedbacks(selectedCourse);
     } catch (err) {
-      console.error("❌ Failed to delete feedback:", err);
+      console.error("❌ Failed to delete:", err);
     }
   };
 
@@ -118,9 +128,10 @@ export default function FeedbackDashboardPage() {
         <h1 className="text-2xl font-bold text-[var(--main-color)]">
           إدارة التقييمات
         </h1>
+
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 bg-[var(--main-color)] text-white px-4 py-2 rounded-xl hover:bg-[var(--secondary-color-2)] transition"
+          className="flex items-center gap-2 bg-[var(--main-color)] text-white px-4 py-2 rounded-xl hover:bg-[var(--secondary-color-2)]"
         >
           <FaPlus /> إضافة تقييم جديد
         </button>
@@ -157,12 +168,14 @@ export default function FeedbackDashboardPage() {
             <thead className="bg-gray-100">
               <tr>
                 <th className="p-4">التقييم</th>
+                <th className="p-4">الاسم</th>
                 <th className="p-4">التعليق (ع)</th>
                 <th className="p-4">التعليق (En)</th>
                 <th className="p-4">الإيميل</th>
                 <th className="p-4 text-center">الإجراءات</th>
               </tr>
             </thead>
+
             <tbody>
               {feedbacks.length > 0 ? (
                 feedbacks.map((fb) => (
@@ -172,21 +185,23 @@ export default function FeedbackDashboardPage() {
                         <FaStar key={i} />
                       ))}
                     </td>
+
+                    <td className="p-4">{fb.fullName || "-"}</td>
                     <td className="p-4">{fb.commentAr || "-"}</td>
                     <td className="p-4">{fb.commentEn || "-"}</td>
                     <td className="p-4">{fb.email || "-"}</td>
+
                     <td className="p-4 text-center flex justify-center gap-3">
                       <button
                         onClick={() => handleEdit(fb)}
-                        className="text-blue-500 hover:text-blue-700 transition"
-                        title="تعديل"
+                        className="text-blue-500 hover:text-blue-700"
                       >
                         <FaEdit />
                       </button>
+
                       <button
                         onClick={() => handleDelete(fb.id)}
-                        className="text-red-500 hover:text-red-700 transition"
-                        title="حذف"
+                        className="text-red-500 hover:text-red-700"
                       >
                         <FaTrash />
                       </button>
@@ -195,7 +210,7 @@ export default function FeedbackDashboardPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5" className="p-6 text-center text-gray-500">
+                  <td colSpan="6" className="p-6 text-center text-gray-500">
                     لا يوجد تقييمات لهذا الكورس حالياً
                   </td>
                 </tr>
@@ -205,7 +220,7 @@ export default function FeedbackDashboardPage() {
         </div>
       )}
 
-      {/* 🧾 نافذة إضافة تقييم */}
+      {/* ➕ نافذة إضافة */}
       {showForm && (
         <FeedbackModal
           title="إضافة تقييم جديد"
@@ -217,7 +232,7 @@ export default function FeedbackDashboardPage() {
         />
       )}
 
-      {/* ✏️ نافذة تعديل تقييم */}
+      {/* ✏️ نافذة تعديل */}
       {showEditForm && (
         <FeedbackModal
           title="تعديل التقييم"
@@ -232,7 +247,9 @@ export default function FeedbackDashboardPage() {
   );
 }
 
-// 🧩 مكون النافذة المنبثقة (إضافة / تعديل)
+
+
+
 function FeedbackModal({ title, formData, setFormData, courses, onClose, onSubmit }) {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -240,7 +257,9 @@ function FeedbackModal({ title, formData, setFormData, courses, onClose, onSubmi
         <h2 className="text-xl font-bold mb-4 text-[var(--main-color)]">
           {title}
         </h2>
+
         <form onSubmit={onSubmit} className="space-y-4">
+
           <select
             value={formData.courseId}
             onChange={(e) =>
@@ -272,6 +291,17 @@ function FeedbackModal({ title, formData, setFormData, courses, onClose, onSubmi
 
           <input
             type="text"
+            placeholder="اسم المستخدم"
+            value={formData.fullName}
+            onChange={(e) =>
+              setFormData({ ...formData, fullName: e.target.value })
+            }
+            className="w-full border rounded-lg p-2"
+            required
+          />
+
+          <input
+            type="email"
             placeholder="Email"
             value={formData.email}
             onChange={(e) =>
@@ -283,7 +313,7 @@ function FeedbackModal({ title, formData, setFormData, courses, onClose, onSubmi
 
           <textarea
             placeholder="Comment (Ar)"
-            value={formData.commentAr || ""}
+            value={formData.commentAr}
             onChange={(e) =>
               setFormData({ ...formData, commentAr: e.target.value })
             }
@@ -292,7 +322,7 @@ function FeedbackModal({ title, formData, setFormData, courses, onClose, onSubmi
 
           <textarea
             placeholder="Comment (En)"
-            value={formData.commentEn || ""}
+            value={formData.commentEn}
             onChange={(e) =>
               setFormData({ ...formData, commentEn: e.target.value })
             }
@@ -307,6 +337,7 @@ function FeedbackModal({ title, formData, setFormData, courses, onClose, onSubmi
             >
               إلغاء
             </button>
+
             <button
               type="submit"
               className="px-4 py-2 rounded-lg bg-[var(--main-color)] text-white hover:bg-[var(--secondary-color-2)]"
@@ -314,6 +345,7 @@ function FeedbackModal({ title, formData, setFormData, courses, onClose, onSubmi
               حفظ
             </button>
           </div>
+
         </form>
       </div>
     </div>

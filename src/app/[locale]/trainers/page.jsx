@@ -1,10 +1,10 @@
-import Trainers from '@/conponents/trainers'
+import Trainers from '@/components/trainers'
 import React from 'react'
 
 export default function page() {
   return (
     <div>
-      <Trainers/>
+      <Trainers isMargin={true}/>
     </div>
   )
 }

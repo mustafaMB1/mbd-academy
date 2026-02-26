@@ -1,9 +1,9 @@
-import Header from '@/conponents/header';
+import Header from '../../components/header';
 import {NextIntlClientProvider} from 'next-intl';
  import './globals.css'
-import Footer from '@/conponents/footer';
-import WhatsAppFloat from '@/conponents/whatsAppFloat';
-import ScrollToTopButton from '@/conponents/scroolToBottom';
+import Footer from '../../components/footer';
+import WhatsAppFloat from '../../components/whatsAppFloat';
+import ScrollToTopButton from '../../components/scroolToBottom';
 
  
 export default async function RootLayout({children}) {

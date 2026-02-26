@@ -94,8 +94,8 @@ export default function Footer() {
       </div>
 
       {/* الحقوق */}
-      <div className="border-t border-gray-800 mt-12 pt-6 text-center text-gray-500 text-sm">
-        © 2023 {t("rights")} | {t("madeBy")} 💜
+      <div className="border-t border-gray-800 mt-12 pt-2 text-center text-gray-500 text-sm">
+        © {new Date().getFullYear()} {t("rights")} 💜
       </div>
     </footer>
   );
