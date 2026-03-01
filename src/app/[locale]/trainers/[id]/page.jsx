@@ -74,7 +74,7 @@ export default function TrainerDetails() {
 
   if (loading) {
     return (
-      <section className="relative py-24 md:mt-[177px] bg-[#070A16] text-white overflow-hidden">
+      <section className="relative py-24 mt-[156px] bg-[#070A16] text-white overflow-hidden">
         <BgDecor />
         <div className="relative max-w-5xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-xl">
@@ -90,7 +90,7 @@ export default function TrainerDetails() {
 
   if (!trainer) {
     return (
-      <section className="relative py-24 md:mt-[177px] bg-[#070A16] text-white overflow-hidden">
+      <section className="relative py-24 mt-[156px] bg-[#070A16] text-white overflow-hidden">
         <BgDecor />
         <div className="relative max-w-5xl mx-auto px-6 text-center">
           <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-10 backdrop-blur-xl">
