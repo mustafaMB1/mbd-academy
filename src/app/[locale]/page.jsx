@@ -1,5 +1,4 @@
 import RecentBlog from '@/components/recentBlog';
-import CoursesSection from '@/components/courses';
 import FeaturesSection from '@/components/featuersGrid';
 import HeroSection from '@/components/heroSlider';
 import Intro from '@/components/intro';
@@ -7,6 +6,7 @@ import WhatWeOffer from '@/components/offer';
 import Trainers from '@/components/trainers';
 import CoursesWithFeedback from '@/components/testimonial';
 import FAQSection from '@/components/faqSection';
+import CoursesAvailableSection from '@/components/CoursesAvailableSection';
   
 export default function HomePage() {
   return (
@@ -16,7 +16,7 @@ export default function HomePage() {
       <WhatWeOffer/>
       <FAQSection/>
       <Intro/>
-      <CoursesSection/>
+      <CoursesAvailableSection/>
       <Trainers isMargin={false}/>
       <RecentBlog/>
       <CoursesWithFeedback/>

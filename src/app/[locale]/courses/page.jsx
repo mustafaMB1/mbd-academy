@@ -2,7 +2,7 @@
 // import { getLocale, getTranslations } from "next-intl/server";
 // import CoursesSlider from "@/conponents/slider";
 
-import CoursesPage from "@/components/courses";
+import CoursesPage from "@/components/CoursesGrid";
 
 export default function Courses() {
   // const locale = await getLocale();

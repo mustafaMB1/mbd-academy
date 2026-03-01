@@ -10,79 +10,116 @@ export default function SliderData({ data }) {
   const locale = useLocale();
   const isAr = locale === "ar";
 
-  const activeTrainers = data.filter((t) => t.active);
+  const list = Array.isArray(data) ? data : [];
+  const activeTrainers = list.filter((t) => t?.active);
 
-  if (activeTrainers.length === 0)
+  if (activeTrainers.length === 0) {
     return (
-      <p className="text-center text-gray-600 py-10">
-        {isAr ? "لا يوجد مدربين متاحين" : "No active trainers"}
-      </p>
+      <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-10 text-center">
+        <div className="text-lg font-extrabold text-white">
+          {isAr ? "لا يوجد مدربين متاحين" : "No active trainers"}
+        </div>
+        <div className="mt-2 text-sm text-white/60">
+          {isAr
+            ? "سيظهر المدربون هنا عندما يتم تفعيلهم من لوحة الإدارة."
+            : "Trainers will appear here once enabled from the admin panel."}
+        </div>
+      </div>
     );
+  }
 
   return (
     <div
-      className={`w-full px-2 sm:px-4 lg:px-6 ${
-        isAr ? "direction-rtl text-right" : "text-left"
-      }`}
+      className={`w-full ${isAr ? "direction-rtl text-right" : "text-left"}`}
       dir={isAr ? "rtl" : "ltr"}
     >
-      {/* Grid Responsive */}
+      {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {activeTrainers.map((trainer) => (
-          <div
-            key={trainer.id}
-            className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300"
-          >
-            <Link href={`/${locale}/trainers/${trainer.id}`} className="block">
+        {activeTrainers.map((trainer) => {
+          const name = isAr ? trainer?.nameAr : trainer?.nameEn;
+          const bio = isAr ? trainer?.bioAr : trainer?.bioEn;
 
-              {/* صورة المدرب */}
-              <div className="relative w-full h-52 sm:h-60 md:h-64">
-                <Image
-                  src={
-                    trainer.imageUrl && trainer.imageUrl.trim() !== ""
-                      ? trainer.imageUrl
-                      : trainerImage
-                  }
-                  alt={isAr ? trainer.nameAr : trainer.nameEn || "Trainer"}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
+          const imgSrc =
+            trainer?.imageUrl && String(trainer.imageUrl).trim() !== ""
+              ? String(trainer.imageUrl).trim()
+              : trainerImage;
 
-              {/* تفاصيل المدرب */}
-              <div className={`p-4 sm:p-6 ${isAr ? "text-right" : "text-left"}`}>
-                <h3 className="text-xl sm:text-2xl font-bold text-[var(--main-color)] mb-2 line-clamp-1">
-                  {isAr ? trainer.nameAr : trainer.nameEn}
-                </h3>
+          const specName = trainer?.speciality
+            ? isAr
+              ? trainer.speciality?.nameAr
+              : trainer.speciality?.nameEn
+            : null;
 
-                <p
-                  className={`text-gray-600 mb-4 text-sm sm:text-base line-clamp-3 leading-relaxed ${
-                    isAr ? "text-right" : "text-left"
-                  }`}
-                >
-                  {isAr ? trainer.bioAr : trainer.bioEn}
-                </p>
+          return (
+            <Link
+              key={trainer.id}
+              href={`/${locale}/trainers/${trainer.id}`}
+              className="group block"
+            >
+              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] shadow-[0_0_40px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-1 hover:bg-white/[0.05]">
+                {/* Image */}
+                <div className="relative w-full h-56 sm:h-64">
+                  <Image
+                    src={imgSrc}
+                    alt={name || "Trainer"}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={false}
+                  />
 
-                {trainer.speciality && (
-                  <div
-                    className={`flex items-center gap-2 text-[var(--secondary-color-1)] font-medium text-sm ${
-                      isAr ? "flex-row" : ""
+                  {/* overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-90" />
+
+                  {/* badge top */}
+                  {specName ? (
+                    <div
+                      className={`absolute top-4 ${
+                        isAr ? "right-4" : "left-4"
+                      } inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-3 py-1 text-xs font-bold text-white backdrop-blur`}
+                    >
+                      <MdFolderSpecial className="text-[var(--main-color)] text-base" />
+                      <span className="line-clamp-1">{specName}</span>
+                    </div>
+                  ) : null}
+                </div>
+
+                {/* Content */}
+                <div className="p-5 sm:p-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white line-clamp-1">
+                      {name || (isAr ? "مدرب" : "Trainer")}
+                    </h3>
+
+                    {/* small accent dot */}
+                    <span className="mt-2 inline-block h-2 w-2 rounded-full bg-[var(--main-color)] opacity-80" />
+                  </div>
+
+                  <p
+                    className={`mt-3 text-sm sm:text-base leading-relaxed text-white/70 line-clamp-3 ${
+                      isAr ? "text-right" : "text-left"
                     }`}
                   >
-                    <MdFolderSpecial className="text-[var(--main-color)]" />
-                    <span>
-                      {isAr
-                        ? trainer.speciality.nameAr
-                        : trainer.speciality.nameEn}
+                    {bio || (isAr ? "—" : "—")}
+                  </p>
+
+                  {/* CTA line */}
+                  <div className="mt-5 flex items-center gap-2 text-sm font-bold text-white/80">
+                    <span className="inline-block h-[2px] w-8 rounded-full bg-[var(--main-color)]/70" />
+                    <span className="group-hover:text-white transition">
+                      {isAr ? "عرض الملف" : "View profile"}
                     </span>
                   </div>
-                )}
-              </div>
+                </div>
 
+                {/* subtle shine on hover */}
+                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300">
+                  <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[var(--main-color)]/10 blur-3xl" />
+                </div>
+              </div>
             </Link>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -6,7 +6,13 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = { 
     output: 'standalone', // ✅ هذا هو المطلوب لنتلايفاي
   images: {
-    unoptimized: true, // لتجنب مشاكل الصور أثناء النشر
+    unoptimized: true,
+        remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "drive.google.com",
+      },
+    ], // لتجنب مشاكل الصور أثناء النشر
   },
 };
  

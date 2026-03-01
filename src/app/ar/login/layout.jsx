@@ -9,7 +9,7 @@ export default function AdminLayout({ children }) {
       <body className="bg-gray-100 min-h-screen font-[Tajawal]">
 
           {/* ✅ المحتوى الرئيسي */}
-          <main className="flex-1 bg-white p-6 shadow-inner overflow-y-auto">
+          <main className="flex-1 bg-white  shadow-inner overflow-y-auto">
             {children}
           </main>
        

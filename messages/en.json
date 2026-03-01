@@ -86,6 +86,24 @@
 ,
 
 
+  "CoursesAvailable": {
+    "badge": "Updated List",
+    "title": "Our Available Courses",
+    "subtitle": "Choose the right learning path and start your journey with structured, hands-on content.",
+    "category": "Category",
+    "level": "Level",
+    "trainer": "Trainer",
+    "syllabus": "Syllabus",
+    "details": "Details",
+    "enroll": "Enroll Now",
+    "unknown": "Not specified",
+    "price": "${value}",
+    "more": "and {count} more items..."
+  }
+
+,
+
+
 
   "RecentBlog": {
     "title": "Our Recent Blog",
