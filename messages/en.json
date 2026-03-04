@@ -4,20 +4,19 @@
     "about": "About Us",
     "switch": "العربية"
   },
+
   "Home": {
-    "heroBadge": "Modern UI with a futuristic look and a strong user experience",
-    "heroSecondaryBtn": "Next slide",
-    "heroMiniLabel": "Current inquiry",
-    "heroRightBadge": "Learn in a",
+    "heroBadge": "MBD Academy for Training & Development",
 
-    "titleslide1": "Start your learning journey with top courses",
-    "descslide1": "Pick the right course for you with a clear roadmap, continuous support, and a modern learning experience.",
-    "btnTextslide1": "Ask about courses",
+    "heroTitleMain": "Level Up Your Technical Skills",
+    "heroTitleSub": "Start Your Professional Journey Today",
 
-    "titleslide2": "Turn your idea into a professional website",
-    "descslide2": "We can help you build a website or a full system from design to launch — with options that fit your budget.",
-    "btnTextslide2": "Get help building a site"
-  },
+    "heroDesc": "We provide professional courses and integrated technical services to help you confidently build your future with real-world experience.",
+
+    "heroCtaTitle": "Start Your Tech Future Now",
+    "heroCtaDesc": "Choose the path that suits you, whether you want to learn a new skill or professionally develop your technical project."
+  }
+,
 
 
 
@@ -221,17 +220,31 @@
     
     ,
     
-      "Contact": {
-        "title": "Get in Touch with Us",
-        "subtitle": "We’d love to hear from you! Whether you have a question about our courses, instructors, or online learning — we’re here to help.",
-        "globalTitle": "We Reach Students Worldwide",
-        "globalText": "Our online courses connect learners from every corner of the world with expert instructors for real, hands-on learning experiences.",
-        "connectTitle": "Contact Information",
-        "phone": "Phone",
-        "email": "Email",
-        "online": "All our courses are 100% online and practical",
-        "followUs": "Follow us on social media"
-      }
+
+  "Contact": {
+    "title": "Contact Us",
+    "subtitle": "We’re always happy to hear from you. Our team is ready to answer your questions and provide full support.",
+
+    "connectTitle": "Stay Connected",
+    "connectSubtitle": "Reach out through any of the following methods. We’ll be glad to assist you.",
+
+    "phone": "Phone",
+    "email": "Email",
+    "online": "Status",
+    "onlineValue": "Available online 24/7",
+
+    "location": "Location",
+    "locationValue": "Syria",
+
+    "followUs": "Follow us on social media",
+
+    "emailUs": "Email Us",
+    "callUs": "Call Now",
+
+    "globalTitle": "We Reach You Anywhere",
+    "globalText": "We provide our educational and technical services to students and clients worldwide with high quality and professional standards."
+  }
+
     ,
 
 
@@ -341,7 +354,49 @@
 
       
       
+      ,
+
       
+
+  "Services": {
+    "title": "Our Technical & Training Services",
+    "subtitle": "Integrated solutions in education, development, and professional tech project building.",
+    "items": {
+      "education": {
+        "title": "Practical Learning",
+        "desc": "Professional content and real-world projects to build true skills."
+      },
+      "training": {
+        "title": "Training & Mentorship",
+        "desc": "Structured training plans with direct guidance."
+      },
+      "community": {
+        "title": "Supportive Community",
+        "desc": "An interactive learning environment for growth."
+      },
+      "global": {
+        "title": "Global Standards",
+        "desc": "Using modern technologies and best practices."
+      },
+      "hosting": {
+        "title": "Website Deployment",
+        "desc": "Domain & hosting setup, SSL configuration, and professional launch."
+      },
+      "webdev": {
+        "title": "Web Design & Development",
+        "desc": "Fast, responsive, and professional custom-built websites."
+      },
+      "mobile": {
+        "title": "Mobile App Development",
+        "desc": "High-performance Android & iOS applications."
+      },
+      "design": {
+        "title": "Graphic Design",
+        "desc": "Branding, logos, and creative visual content."
+      }
+    }
+  }
+
     
 
 

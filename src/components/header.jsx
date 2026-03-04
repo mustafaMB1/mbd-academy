@@ -5,7 +5,7 @@ import Image from "next/image";
 import logo from "../assest/logo.png";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaGlobe } from "react-icons/fa";
 import EmailCopy from "./copyEmailInHeader";
 import PhoneCopy from "./copyNumberInHeader";
 
@@ -72,7 +72,7 @@ export default function Header() {
         <div className="relative border-b border-white/10 bg-white/[0.04] backdrop-blur-xl">
           <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
             {/* Top bar */}
-            <div className="flex flex-col gap-3 py-3 md:flex-row md:items-center  md:justify-between">
+            <div className="flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between">
               {/* Logo */}
               <Link
                 href={`/${currentLocale}/`}
@@ -82,7 +82,7 @@ export default function Header() {
                   <Image
                     src={logo}
                     alt="logo"
-                    className=" h-40 md:h-30 w-32 md:w-40 object-contain"
+                    className="h-40 md:h-30 w-32 md:w-40 object-contain"
                     priority
                   />
                   <div className="pointer-events-none absolute inset-0 rounded-2xl shadow-[0_0_40px_rgba(217,70,239,0.18)]" />
@@ -185,35 +185,23 @@ export default function Header() {
 
               {/* Right actions */}
               <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto justify-between md:justify-end">
-                {/* Login/Logout */}
-                {!hasToken ? (
-                  <Link
-                    href={`/${currentLocale}/login`}
-                    className="inline-flex items-center justify-center rounded-2xl px-3 md:px-4 py-2 text-sm font-semibold
-                    text-white/90 bg-white/[0.05] ring-1 ring-white/10
-                    hover:ring-white/20 hover:bg-white/[0.08] transition"
-                  >
-                    {currentLocale === "ar" ? "تسجيل الدخول" : "Login"}
-                  </Link>
-                ) : (
-                  <button
-                    onClick={handleLogout}
-                    className="inline-flex items-center justify-center rounded-2xl px-3 md:px-4 py-2 text-sm font-semibold
-                    text-rose-200 bg-rose-500/10 ring-1 ring-rose-400/20
-                    hover:bg-rose-500/15 hover:ring-rose-300/30 transition"
-                  >
-                    {currentLocale === "ar" ? "تسجيل الخروج" : "Logout"}
-                  </button>
-                )}
-
-                {/* Language switch */}
+                {/* ✅ Language switch (Globe) */}
                 <Link
                   href={newPath}
-                  className="inline-flex items-center justify-center rounded-2xl px-3 py-2 text-sm font-semibold
-                  text-white/80 bg-white/[0.03] ring-1 ring-white/10
+                  aria-label="Switch language"
+                  title={currentLocale === "ar" ? "Switch to English" : "التبديل للعربية"}
+                  className="group inline-flex items-center justify-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold
+                  text-white/85 bg-white/[0.03] ring-1 ring-white/10
                   hover:bg-white/[0.06] hover:text-white transition"
                 >
-                  {currentLocale === "ar" ? "English" : "العربية"}
+                  <span className="grid place-items-center h-9 w-9 rounded-xl bg-white/[0.04] ring-1 ring-white/10 group-hover:ring-white/20 transition">
+                    <FaGlobe className="text-white/80 group-hover:text-white transition" />
+                  </span>
+
+                  {/* نص صغير فقط على الديسكتوب */}
+                  <span className="hidden md:inline text-white/80 group-hover:text-white transition">
+                    {currentLocale === "ar" ? "EN" : "AR"}
+                  </span>
                 </Link>
 
                 {/* Mobile menu */}

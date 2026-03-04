@@ -7,6 +7,7 @@ import Trainers from '@/components/trainers';
 import CoursesWithFeedback from '@/components/testimonial';
 import FAQSection from '@/components/faqSection';
 import CoursesAvailableSection from '@/components/CoursesAvailableSection';
+import ServicesSection from '@/components/services';
   
 export default function HomePage() {
   return (
@@ -18,8 +19,8 @@ export default function HomePage() {
       <Intro/>
       <CoursesAvailableSection/>
       <Trainers isMargin={false}/>
+      <ServicesSection/>
       <RecentBlog/>
-      <CoursesWithFeedback/>
     </>
   );
 }
