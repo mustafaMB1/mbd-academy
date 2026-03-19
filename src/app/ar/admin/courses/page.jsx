@@ -5,6 +5,7 @@ import { coursesServis } from "@/services/coursesServis";
 import { categorySrvis } from "@/services/categoryServis";
 import { trainersSrvis } from "@/services/trainersServis";
 import { levelsSrvis } from "@/services/levelsServis";
+import { baseUrl } from "@/baseUrl";
 import {
   FaPlus,
   FaEdit,
@@ -15,9 +16,9 @@ import {
   FaTags,
   FaUserTie,
   FaLayerGroup,
-  FaLink,
   FaMoneyBillWave,
   FaListUl,
+  FaImage,
 } from "react-icons/fa";
 
 export default function CoursesPage() {
@@ -28,12 +29,12 @@ export default function CoursesPage() {
 
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const [editingId, setEditingId] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-const [imagePreview, setImagePreview] = useState("");
-const [uploading, setUploading] = useState(false);
-  const [filterStatus, setFilterStatus] = useState("all"); // all | active | inactive
+  const [imagePreview, setImagePreview] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
 
   const [formData, setFormData] = useState({
     nameEn: "",
@@ -45,12 +46,10 @@ const [uploading, setUploading] = useState(false);
     levelId: "",
     published: false,
     price: 0,
-    url: "",
     syllabusEn: [""],
     syllabusAr: [""],
   });
 
-  // ✅ تحميل البيانات
   useEffect(() => {
     let mounted = true;
 
@@ -79,12 +78,12 @@ const [uploading, setUploading] = useState(false);
     }
 
     fetchData();
+
     return () => {
       mounted = false;
     };
   }, []);
 
-  // ✅ Maps سريعة للإسم حسب id
   const categoryMap = useMemo(() => {
     const m = new Map();
     categories.forEach((c) => m.set(String(c.id), c));
@@ -103,7 +102,6 @@ const [uploading, setUploading] = useState(false);
     return m;
   }, [levels]);
 
-  // ✅ إحصائيات
   const stats = useMemo(() => {
     const total = courses.length;
     const active = courses.filter((c) => c?.published === true).length;
@@ -111,7 +109,6 @@ const [uploading, setUploading] = useState(false);
     return { total, active, inactive };
   }, [courses]);
 
-  // ✅ فلترة
   const filteredCourses = useMemo(() => {
     return courses.filter((course) => {
       if (filterStatus === "active") return course?.published === true;
@@ -121,14 +118,14 @@ const [uploading, setUploading] = useState(false);
   }, [courses, filterStatus]);
 
   const handlePickImage = (e) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  setImageFile(file);
-  const preview = URL.createObjectURL(file);
-  setImagePreview(preview);
-};
-  // ✅ تغييرات عامة
+    setImageFile(file);
+    const preview = URL.createObjectURL(file);
+    setImagePreview(preview);
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((p) => ({
@@ -137,7 +134,6 @@ const [uploading, setUploading] = useState(false);
     }));
   };
 
-  // ✅ syllabus
   const handleSyllabusChange = (e, lang, idx) => {
     const arr = [...formData[lang]];
     arr[idx] = e.target.value;
@@ -154,59 +150,55 @@ const [uploading, setUploading] = useState(false);
     setFormData((p) => ({ ...p, [lang]: arr.length ? arr : [""] }));
   };
 
-const resetForm = () => {
-  setEditingId(null);
-  setImageFile(null);
-  setImagePreview("");
+  const resetForm = () => {
+    setEditingId(null);
+    setImageFile(null);
+    setImagePreview("");
 
-  setFormData({
-    nameEn: "",
-    nameAr: "",
-    descriptionEn: "",
-    descriptionAr: "",
-    categoryId: "",
-    trainerId: "",
-    levelId: "",
-    published: false,
-    price: 0,
-    url: "",
-    syllabusEn: [""],
-    syllabusAr: [""],
-  });
-};
+    setFormData({
+      nameEn: "",
+      nameAr: "",
+      descriptionEn: "",
+      descriptionAr: "",
+      categoryId: "",
+      trainerId: "",
+      levelId: "",
+      published: false,
+      price: 0,
+      syllabusEn: [""],
+      syllabusAr: [""],
+    });
+  };
 
-  // ✅ Edit
-const handleEdit = (course) => {
-  setEditingId(course.id);
+  const handleEdit = (course) => {
+    setEditingId(course.id);
 
-  setFormData({
-    nameEn: course.nameEn || "",
-    nameAr: course.nameAr || "",
-    descriptionEn: course.descriptionEn || "",
-    descriptionAr: course.descriptionAr || "",
-    categoryId: course.categoryId ?? "",
-    trainerId: course.trainerId ?? "",
-    levelId: course.levelId ?? "",
-    published: !!course.published,
-    price: course.price ?? 0,
-    url: course.url || "",
-    syllabusEn:
-      Array.isArray(course.syllabusEn) && course.syllabusEn.length
-        ? course.syllabusEn
-        : [""],
-    syllabusAr:
-      Array.isArray(course.syllabusAr) && course.syllabusAr.length
-        ? course.syllabusAr
-        : [""],
-  });
+    setFormData({
+      nameEn: course.nameEn || "",
+      nameAr: course.nameAr || "",
+      descriptionEn: course.descriptionEn || "",
+      descriptionAr: course.descriptionAr || "",
+      categoryId: course.categoryId ?? "",
+      trainerId: course.trainerId ?? "",
+      levelId: course.levelId ?? "",
+      published: !!course.published,
+      price: course.price ?? 0,
+      syllabusEn:
+        Array.isArray(course.syllabusEn) && course.syllabusEn.length
+          ? course.syllabusEn
+          : [""],
+      syllabusAr:
+        Array.isArray(course.syllabusAr) && course.syllabusAr.length
+          ? course.syllabusAr
+          : [""],
+    });
 
-  setImagePreview(course.url || "");
-  setImageFile(null);
+    setImagePreview(course.url || "");
+    setImageFile(null);
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  // ✅ Delete
   const handleDelete = async (id) => {
     if (!confirm("هل أنت متأكد من حذف هذا الكورس؟")) return;
 
@@ -234,7 +226,6 @@ const handleEdit = (course) => {
     }
   };
 
-  // ✅ publish toggle
   const togglePublish = async (course) => {
     try {
       const nextPublished = !course.published;
@@ -249,82 +240,96 @@ const handleEdit = (course) => {
       console.error("❌ Error updating status:", err);
     }
   };
-const uploadImage = async (file) => {
-  if (!file) return formData.url || "";
 
-  setUploading(true);
+  const uploadCourseImage = async (courseId, file) => {
+    if (!courseId || !file) return null;
 
-  try {
-    const fd = new FormData();
-    fd.append("file", file);
+    setUploading(true);
 
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: fd,
-    });
+    try {
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.error || "Upload failed");
+      const fd = new FormData();
+      fd.append("file", file);
 
-    return data.url;
-  } catch (err) {
-    console.error("Upload error:", err);
-    alert("فشل رفع الصورة");
-    return formData.url || "";
-  } finally {
-    setUploading(false);
-  }
-};
-  // ✅ submit
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setSaving(true);
+      const res = await fetch(`${baseUrl}/courses/${courseId}/photo`, {
+        method: "POST",
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: fd,
+      });
 
-  try {
-    let imageUrl = formData.url || "";
+      const data = await res.json().catch(() => ({}));
 
-    if (imageFile) {
-      imageUrl = await uploadImage(imageFile);
+      if (!res.ok) {
+        throw new Error(
+          data?.message || data?.error || "فشل رفع صورة الكورس"
+        );
+      }
+
+      return data;
+    } catch (err) {
+      console.error("❌ Upload course image failed:", err);
+      alert(err.message || "فشل رفع صورة الكورس");
+      return null;
+    } finally {
+      setUploading(false);
     }
+  };
 
-    const payload = {
-      ...formData,
-      url: imageUrl,
-      categoryId: formData.categoryId
-        ? Number(formData.categoryId)
-        : null,
-      levelId: formData.levelId
-        ? Number(formData.levelId)
-        : null,
-      price: Number(formData.price || 0),
-    };
-
-    if (editingId) {
-      await coursesServis.updateOne(editingId, payload);
-    } else {
-      await coursesServis.createOne(payload);
-    }
-
+  const refreshCourses = async () => {
     const refreshed = await coursesServis.getAll();
     setCourses(Array.isArray(refreshed) ? refreshed : []);
-    resetForm();
-  } catch (err) {
-    console.error("❌ Error saving course:", err);
-    alert("فشل حفظ الكورس");
-  } finally {
-    setSaving(false);
-  }
-};
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+
+    try {
+      const payload = {
+        ...formData,
+        categoryId: formData.categoryId ? Number(formData.categoryId) : null,
+        levelId: formData.levelId ? Number(formData.levelId) : null,
+        price: Number(formData.price || 0),
+      };
+
+      if (editingId) {
+        await coursesServis.updateOne(editingId, payload);
+
+        if (imageFile) {
+          await uploadCourseImage(editingId, imageFile);
+        }
+      } else {
+        const created = await coursesServis.createOne(payload);
+
+        const createdCourseId =
+          created?.id || created?.data?.id || created?.course?.id;
+
+        if (imageFile && createdCourseId) {
+          await uploadCourseImage(createdCourseId, imageFile);
+        }
+      }
+
+      await refreshCourses();
+      resetForm();
+    } catch (err) {
+      console.error("❌ Error saving course:", err);
+      alert("فشل حفظ الكورس");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <section className="relative px-4 md:px-6 py-6 bg-[#070A16] text-white">
-      {/* خلفية dots / glow */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.65)_1px,transparent_0)] [background-size:18px_18px]" />
       <div className="pointer-events-none absolute -top-32 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-fuchsia-600/18 via-purple-600/14 to-cyan-400/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-gradient-to-br from-cyan-400/12 via-blue-500/10 to-fuchsia-600/14 blur-3xl" />
 
       <div className="relative">
-        {/* Header */}
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/10">
@@ -340,7 +345,6 @@ const handleSubmit = async (e) => {
             </p>
           </div>
 
-          {/* Stats */}
           <div className="grid grid-cols-3 gap-3 w-full md:w-auto">
             <StatCard label="الإجمالي" value={stats.total} />
             <StatCard label="المنشورة" value={stats.active} highlight />
@@ -348,7 +352,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* Filters */}
         <div className="mb-6 flex flex-wrap items-center gap-2">
           <TabButton
             active={filterStatus === "all"}
@@ -381,17 +384,16 @@ const handleSubmit = async (e) => {
           </button>
         </div>
 
-        {/* Form */}
         <form
           onSubmit={handleSubmit}
           className="relative mb-10 overflow-hidden rounded-3xl bg-white/[0.04] backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10"
         >
-          {saving && (
+          {(saving || uploading) && (
             <div className="absolute inset-0 z-20 grid place-items-center bg-[#070A16]/55 backdrop-blur-sm">
               <div className="flex items-center gap-2 rounded-2xl bg-white/[0.06] px-4 py-3 ring-1 ring-white/10 shadow-sm">
                 <FaSpinner className="animate-spin" />
                 <span className="text-sm font-semibold text-white">
-                  جاري الحفظ...
+                  {uploading ? "جاري رفع الصورة..." : "جاري الحفظ..."}
                 </span>
               </div>
             </div>
@@ -415,13 +417,14 @@ const handleSubmit = async (e) => {
             {editingId && (
               <div className="text-xs font-semibold text-white/70">
                 ID:{" "}
-                <span className="font-mono">{String(editingId).slice(0, 8)}…</span>
+                <span className="font-mono">
+                  {String(editingId).slice(0, 8)}…
+                </span>
               </div>
             )}
           </div>
 
           <div className="p-5 md:p-6 space-y-6">
-            {/* Basics */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Field label="Course Name (EN)">
                 <input
@@ -466,7 +469,6 @@ const handleSubmit = async (e) => {
               </Field>
             </div>
 
-            {/* Meta */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Field label="التصنيف" icon={<FaTags />}>
                 <select
@@ -527,31 +529,24 @@ const handleSubmit = async (e) => {
                 />
               </Field>
 
- <Field label="صورة الكورس">
-  <input
-    type="file"
-    accept="image/*"
-    onChange={handlePickImage}
-    className="input-dark"
-  />
+              <Field label="صورة الكورس" icon={<FaImage />}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePickImage}
+                  className="input-dark"
+                />
 
-  {(imagePreview || formData.url) && (
-    <div className="mt-3 w-full h-40 rounded-2xl overflow-hidden border border-white/10">
-      <img
-        src={imagePreview || formData.url}
-        alt="preview"
-        className="w-full h-full object-cover"
-      />
-    </div>
-  )}
-
-  {uploading && (
-    <div className="mt-2 flex items-center gap-2 text-sm text-white/70">
-      <FaSpinner className="animate-spin" />
-      جاري رفع الصورة...
-    </div>
-  )}
-</Field>
+                {(imagePreview || formData.url) && (
+                  <div className="mt-3 w-full h-40 rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03]">
+                    <img
+                      src={imagePreview || formData.url}
+                      alt="preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+              </Field>
 
               <div className="flex items-end">
                 <label className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
@@ -576,14 +571,15 @@ const handleSubmit = async (e) => {
               </div>
             </div>
 
-            {/* Syllabus */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <SyllabusBox
                 title="Syllabus (EN)"
                 items={formData.syllabusEn}
                 onAdd={() => addSyllabusField("syllabusEn")}
                 onRemove={(idx) => removeSyllabusField("syllabusEn", idx)}
-                onChange={(e, idx) => handleSyllabusChange(e, "syllabusEn", idx)}
+                onChange={(e, idx) =>
+                  handleSyllabusChange(e, "syllabusEn", idx)
+                }
                 placeholderPrefix="Topic (EN)"
               />
 
@@ -592,7 +588,9 @@ const handleSubmit = async (e) => {
                 items={formData.syllabusAr}
                 onAdd={() => addSyllabusField("syllabusAr")}
                 onRemove={(idx) => removeSyllabusField("syllabusAr", idx)}
-                onChange={(e, idx) => handleSyllabusChange(e, "syllabusAr", idx)}
+                onChange={(e, idx) =>
+                  handleSyllabusChange(e, "syllabusAr", idx)
+                }
                 placeholderPrefix="موضوع"
               />
             </div>
@@ -601,14 +599,13 @@ const handleSubmit = async (e) => {
           <div className="border-t border-white/10 p-5 md:p-6">
             <button
               type="submit"
-              disabled={saving}
+              disabled={saving || uploading}
               className="w-full rounded-2xl py-3 font-bold text-white bg-[var(--main-color)] hover:bg-[var(--secondary-color-1)] transition shadow-[0_0_25px_rgba(99,102,241,0.18)]"
             >
               {editingId ? "تحديث الدورة" : "إضافة دورة جديدة"}
             </button>
           </div>
 
-          {/* small css helpers */}
           <style jsx global>{`
             .input-dark {
               width: 100%;
@@ -633,7 +630,6 @@ const handleSubmit = async (e) => {
           `}</style>
         </form>
 
-        {/* List */}
         <div className="rounded-3xl bg-white/[0.04] backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.22)] ring-1 ring-white/10 overflow-hidden">
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
             <div className="flex items-center gap-2">
@@ -656,7 +652,6 @@ const handleSubmit = async (e) => {
             )}
           </div>
 
-          {/* Desktop table */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-white/[0.03] text-white/70">
@@ -690,13 +685,23 @@ const handleSubmit = async (e) => {
                         className="border-t border-white/10 hover:bg-white/[0.03]"
                       >
                         <td className="py-3 px-4">
-                          <div className="font-bold text-white">{course.nameAr}</div>
-                          <div className="text-xs text-white/55">{course.nameEn}</div>
+                          <div className="font-bold text-white">
+                            {course.nameAr}
+                          </div>
+                          <div className="text-xs text-white/55">
+                            {course.nameEn}
+                          </div>
                         </td>
 
-                        <td className="py-3 px-4 text-white/80">{cat?.nameAr || "—"}</td>
-                        <td className="py-3 px-4 text-white/80">{tr?.nameAr || "—"}</td>
-                        <td className="py-3 px-4 text-white/80">{lv?.nameAr || "—"}</td>
+                        <td className="py-3 px-4 text-white/80">
+                          {cat?.nameAr || "—"}
+                        </td>
+                        <td className="py-3 px-4 text-white/80">
+                          {tr?.nameAr || "—"}
+                        </td>
+                        <td className="py-3 px-4 text-white/80">
+                          {lv?.nameAr || "—"}
+                        </td>
 
                         <td className="py-3 px-4 font-semibold text-white">
                           {Number(course.price || 0).toLocaleString()}$
@@ -705,14 +710,17 @@ const handleSubmit = async (e) => {
                         <td className="py-3 px-4 text-center">
                           <button
                             onClick={() => togglePublish(course)}
-                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold text-white transition
-                              ${
-                                course.published
-                                  ? "bg-green-500/90 hover:bg-green-500"
-                                  : "bg-white/25 hover:bg-white/30"
-                              }`}
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold text-white transition ${
+                              course.published
+                                ? "bg-green-500/90 hover:bg-green-500"
+                                : "bg-white/25 hover:bg-white/30"
+                            }`}
                           >
-                            {course.published ? <FaCheckCircle /> : <FaRegCircle />}
+                            {course.published ? (
+                              <FaCheckCircle />
+                            ) : (
+                              <FaRegCircle />
+                            )}
                             {course.published ? "منشور" : "غير منشور"}
                           </button>
                         </td>
@@ -741,7 +749,6 @@ const handleSubmit = async (e) => {
             </table>
           </div>
 
-          {/* Mobile cards */}
           <div className="md:hidden p-4 space-y-3">
             {filteredCourses.length === 0 ? (
               <div className="py-10 text-center text-white/55">
@@ -763,13 +770,16 @@ const handleSubmit = async (e) => {
                         <div className="text-base font-extrabold text-white">
                           {course.nameAr}
                         </div>
-                        <div className="text-xs text-white/55 mt-1">{course.nameEn}</div>
+                        <div className="text-xs text-white/55 mt-1">
+                          {course.nameEn}
+                        </div>
                       </div>
 
                       <button
                         onClick={() => togglePublish(course)}
-                        className={`shrink-0 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold text-white transition
-                          ${course.published ? "bg-green-500/90" : "bg-white/25"}`}
+                        className={`shrink-0 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold text-white transition ${
+                          course.published ? "bg-green-500/90" : "bg-white/25"
+                        }`}
                       >
                         {course.published ? "منشور" : "غير منشور"}
                       </button>
@@ -820,8 +830,6 @@ const handleSubmit = async (e) => {
     </section>
   );
 }
-
-/* ----------------- UI Helpers (Dark) ----------------- */
 
 function StatCard({ label, value, highlight }) {
   return (

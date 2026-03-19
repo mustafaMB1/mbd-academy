@@ -80,25 +80,39 @@
     "badge": "Intro Video",
     "hint": "Watch the video to learn more about the academy",
     "pill": "Why MBD?",
-    "mini": "Learn with Clear Steps"
+    "mini": "Learn with Clear Steps",
+    "watchNow": "Watch Now"
   }
 ,
 
 
+
+
   "CoursesAvailable": {
-    "badge": "Updated List",
-    "title": "Our Available Courses",
-    "subtitle": "Choose the right learning path and start your journey with structured, hands-on content.",
+    "badge": "Training Courses",
+    "title": "Available Courses",
+    "subtitle": "Explore our professional training courses designed to help you grow your skills and advance your career.",
+
+    "unknown": "Unknown",
+
     "category": "Category",
     "level": "Level",
     "trainer": "Trainer",
-    "syllabus": "Syllabus",
-    "details": "Details",
-    "enroll": "Enroll Now",
-    "unknown": "Not specified",
+
     "price": "${value}",
-    "more": "and {count} more items..."
+
+    "syllabus": "Course Syllabus",
+
+    "details": "View Details",
+    "enroll": "Enroll Now",
+
+    "more": "+{count} more items",
+
+    "emptyTitle": "No courses available at the moment",
+    "emptyDesc": "New training courses will be added soon. Stay tuned for upcoming programs."
   }
+
+
 
 ,
 

@@ -3,8 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import courseImage from 'public/images/default-course.png'
 import { coursesServis } from "@/services/coursesServis";
 import { useLocale } from "next-intl";
+import { baseUrl } from "@/baseUrl";
+
 import {
   FaTag,
   FaUserTie,
@@ -51,22 +54,27 @@ export default function CourseDetails() {
   const title = isArabic ? course?.nameAr : course?.nameEn;
   const desc = isArabic ? course?.descriptionAr : course?.descriptionEn;
 
-const convertGoogleDriveUrl = (url) => {
-  if (!url) return null;
-
-  // إذا الرابط فيه drive.google.com/file/d/
-  const match = url.match(/\/d\/(.*?)\//);
-  if (match && match[1]) {
-    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+  function resolveImageUrl(url) {
+    const u = (url || "").trim();
+    if (!u) return courseImage;
+  
+    // ✅ إذا الباك بيرجع /uploads/....
+    if (u.startsWith("/uploads/")) return `${baseUrl}${u}`;
+  
+    // ✅ إذا رابط مطلق https
+    if (u.startsWith("http://") || u.startsWith("https://")) return u;
+  
+    // ✅ أي شيء ثاني خليه fallback
+    return courseImage;
   }
 
-  return url;
-};
 
 const imageSrc =
-  course?.url && String(course.url).trim() !== ""
-    ? convertGoogleDriveUrl(course.url)
-    : "/images/default-course.jpg";
+  course?.imageUrl
+ && String(course.imageUrl
+).trim() !=''? resolveImageUrl(course.imageUrl)  : courseImage;
+
+
   const syllabus = isArabic
     ? course?.syllabusAr || []
     : course?.syllabusEn || [];

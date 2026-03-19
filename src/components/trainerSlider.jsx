@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import trainerImage from "../assest/download.jpeg";
+import trainerImage from "public/images/default-trainer.png";
 import { useLocale } from "next-intl";
 import { MdFolderSpecial } from "react-icons/md";
 import Link from "next/link";
@@ -107,7 +107,7 @@ export default function SliderData({ data }) {
                   <div className="mt-5 flex items-center gap-2 text-sm font-bold text-white/80">
                     <span className="inline-block h-[2px] w-8 rounded-full bg-[var(--main-color)]/70" />
                     <span className="group-hover:text-white transition">
-                      {isAr ? "عرض الملف" : "View profile"}
+                      {isAr ? "عرض الملف الشخصي" : "View profile"}
                     </span>
                   </div>
                 </div>

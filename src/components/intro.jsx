@@ -1,7 +1,8 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-
+import { FaPlay } from "react-icons/fa";
+import imageDef from 'public/images/default-course.png'
 export default function Intro() {
   const t = useTranslations("Intro");
   const locale = useLocale();
@@ -19,30 +20,42 @@ export default function Intro() {
       dir={isArabic ? "rtl" : "ltr"}
       className="relative overflow-hidden bg-[#070A16] py-14 md:py-18"
     >
-      {/* Background */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.6)_1px,transparent_0)] [background-size:18px_18px]" />
       <div className="pointer-events-none absolute -top-28 -right-24 h-96 w-96 rounded-full bg-gradient-to-br from-fuchsia-600/20 via-purple-600/14 to-cyan-400/12 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-28 -left-24 h-[520px] w-[520px] rounded-full bg-gradient-to-br from-cyan-400/12 via-blue-500/12 to-fuchsia-600/16 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid items-stretch gap-6 md:grid-cols-12">
-          {/* Video */}
           <div className="md:col-span-7">
             <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_0_35px_rgba(0,0,0,0.25)]">
               <div className="pointer-events-none absolute inset-0 rounded-[28px] shadow-[0_0_55px_rgba(34,211,238,0.10)]" />
 
               <div className="p-4 sm:p-5">
-                <div className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black/30">
-                  <div className="aspect-video">
-                    <iframe
-                      className="h-full w-full"
-                      src="https://www.youtube.com/embed/HrwusO-MvWM?rel=0&autoplay=0&mute=1"
-                      title="Intro Video"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
+                <div className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black/40 group">
+<div className="aspect-video relative">
+  <iframe
+    className="h-full w-full rounded-2xl"
+    src="https://www.youtube.com/embed/ktW9Kk91OEc?rel=0&modestbranding=1&showinfo=0"
+    title="Intro Video"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  />
+
+  {/* overlay gradient */}
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent rounded-2xl" />
+
+  {/* badge play */}
+  <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-black/35 px-4 py-2 backdrop-blur-md border border-white/10">
+    <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-white shadow-[0_0_16px_rgba(34,211,238,0.35)]">
+      <FaPlay className="text-xs" />
+    </span>
+    <span className="text-xs sm:text-sm font-medium text-white/90">
+      {t("watchNow")}
+    </span>
+  </div>
+</div>
                 </div>
 
                 <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -56,7 +69,6 @@ export default function Intro() {
             </div>
           </div>
 
-          {/* Text */}
           <div className="md:col-span-5">
             <div className="relative h-full rounded-[28px] border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_0_35px_rgba(0,0,0,0.25)]">
               <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-gradient-to-b from-fuchsia-500/16 via-purple-500/8 to-cyan-400/12 opacity-80" />
@@ -91,7 +103,6 @@ export default function Intro() {
           </div>
         </div>
 
-        {/* Stats */}
         <div className="mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {stats.map((stat, i) => (
             <div

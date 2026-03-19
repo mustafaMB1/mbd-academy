@@ -9,6 +9,7 @@ import {
   FaMoneyBillWave,
   FaArrowLeft,
   FaArrowRight,
+  FaBookOpen,
 } from "react-icons/fa";
 
 export default function CoursesGrid({ courses = [] }) {
@@ -16,89 +17,140 @@ export default function CoursesGrid({ courses = [] }) {
   const isArabic = locale === "ar";
   const t = useTranslations("CoursesAvailable");
 
-  // ✅ safety: إذا وصل object بالغلط، حوّله لمصفوفة
   const list = Array.isArray(courses) ? courses : courses ? [courses] : [];
 
-  const getName = (c) => (isArabic ? c?.nameAr : c?.nameEn) || "";
-  const getDesc = (c) => (isArabic ? c?.descriptionAr : c?.descriptionEn) || "";
-  const getCategory = (c) =>
-    (isArabic ? c?.category?.nameAr : c?.category?.nameEn) || t("unknown");
-  const getLevel = (c) =>
-    (isArabic ? c?.level?.nameAr : c?.level?.nameEn) || t("unknown");
-  const getTrainer = (c) =>
-    (isArabic ? c?.trainer?.nameAr : c?.trainer?.nameEn) || t("unknown");
-  const getSyllabus = (c) => (isArabic ? c?.syllabusAr : c?.syllabusEn) || [];
+  const getText = (arValue, enValue, fallback = "") =>
+    (isArabic ? arValue : enValue) || fallback;
+
+  const getCourseData = (course) => {
+    return {
+      id: course?.id,
+      title: getText(course?.nameAr, course?.nameEn, t("unknown")),
+      desc: getText(course?.descriptionAr, course?.descriptionEn, t("unknown")),
+      category: getText(
+        course?.category?.nameAr,
+        course?.category?.nameEn,
+        t("unknown")
+      ),
+      level: getText(
+        course?.level?.nameAr,
+        course?.level?.nameEn,
+        t("unknown")
+      ),
+      trainer: getText(
+        course?.trainer?.nameAr,
+        course?.trainer?.nameEn,
+        t("unknown")
+      ),
+      syllabus: isArabic ? course?.syllabusAr || [] : course?.syllabusEn || [],
+      price: Number(course?.price || 0),
+    };
+  };
+
+  if (!list.length) {
+    return (
+      <div className="rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-10 text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/[0.06] ring-1 ring-white/10">
+          <FaBookOpen className="text-white/80 text-2xl" />
+        </div>
+        <h3 className="mt-4 text-xl font-extrabold text-white">
+          {t("emptyTitle")}
+        </h3>
+        <p className="mt-2 text-sm text-white/65">
+          {t("emptyDesc")}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div
       dir={isArabic ? "rtl" : "ltr"}
-      className="grid gap-5 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+      className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
     >
-      {list.map((course) => {
-        const title = getName(course);
-        const desc = getDesc(course);
-        const category = getCategory(course);
-        const level = getLevel(course);
-        const trainer = getTrainer(course);
-        const price = course?.price ?? 0;
-        const syllabus = getSyllabus(course);
+      {list.map((course, index) => {
+        const {
+          id,
+          title,
+          desc,
+          category,
+          level,
+          trainer,
+          syllabus,
+          price,
+        } = getCourseData(course);
 
         return (
-          <div
-            key={course?.id || Math.random()}
-            className="group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.25)] hover:border-white/20 transition"
+          <article
+            key={id || `course-${index}`}
+            className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.25)] transition duration-300 hover:border-white/20 hover:bg-white/[0.055]"
           >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-fuchsia-500/16 via-purple-500/10 to-cyan-400/14 opacity-90" />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070A16]/50 via-transparent to-transparent" />
+            {/* Glow background */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-fuchsia-500/14 via-purple-500/8 to-cyan-400/12 opacity-90" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#070A16]/55 via-transparent to-transparent" />
+
+            {/* Hover glow */}
+            <div className="pointer-events-none absolute -inset-20 opacity-0 transition duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--main-color)]/12 to-transparent blur-2xl" />
+            </div>
 
             <div className="relative p-6">
+              {/* Header */}
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <h3 className="text-xl font-extrabold text-white line-clamp-1">
                     {title}
                   </h3>
-                  <p className="mt-2 text-sm text-white/70 line-clamp-2">
+                  <p className="mt-2 text-sm leading-relaxed text-white/70 line-clamp-3">
                     {desc}
                   </p>
                 </div>
 
-                <span className="shrink-0 inline-flex items-center rounded-2xl bg-white/[0.06] ring-1 ring-white/10 px-3 py-2 text-xs text-white/85">
+                <div className="shrink-0 inline-flex items-center rounded-2xl bg-white/[0.06] ring-1 ring-white/10 px-3 py-2 text-xs font-semibold text-white/85">
                   <FaMoneyBillWave className={isArabic ? "ml-2" : "mr-2"} />
                   {t("price", { value: price })}
-                </span>
+                </div>
               </div>
 
+              {/* Meta pills */}
               <div className="mt-5 flex flex-wrap gap-2">
-                <span className="inline-flex items-center rounded-full bg-white/[0.06] ring-1 ring-white/10 px-3 py-1 text-xs text-white/80">
-                  <FaTag className={isArabic ? "ml-2" : "mr-2"} />
-                  {t("category")}: {category}
-                </span>
-
-                <span className="inline-flex items-center rounded-full bg-white/[0.06] ring-1 ring-white/10 px-3 py-1 text-xs text-white/80">
-                  <FaLayerGroup className={isArabic ? "ml-2" : "mr-2"} />
-                  {t("level")}: {level}
-                </span>
-
-                <span className="inline-flex items-center rounded-full bg-white/[0.06] ring-1 ring-white/10 px-3 py-1 text-xs text-white/80">
-                  <FaUserTie className={isArabic ? "ml-2" : "mr-2"} />
-                  {t("trainer")}: {trainer}
-                </span>
+                <MetaBadge
+                  icon={<FaTag />}
+                  label={`${t("category")}: ${category}`}
+                  isArabic={isArabic}
+                />
+                <MetaBadge
+                  icon={<FaLayerGroup />}
+                  label={`${t("level")}: ${level}`}
+                  isArabic={isArabic}
+                />
+                <MetaBadge
+                  icon={<FaUserTie />}
+                  label={`${t("trainer")}: ${trainer}`}
+                  isArabic={isArabic}
+                />
               </div>
 
+              {/* Syllabus */}
               {Array.isArray(syllabus) && syllabus.length > 0 && (
-                <div className="mt-4 rounded-2xl bg-white/[0.03] ring-1 ring-white/10 p-4">
-                  <div className="text-xs font-semibold text-white/80">
+                <div className="mt-5 rounded-2xl bg-white/[0.03] ring-1 ring-white/10 p-4">
+                  <div className="text-xs font-bold uppercase tracking-wide text-white/80">
                     {t("syllabus")}
                   </div>
-                  <ul className="mt-2 space-y-1 text-sm text-white/70">
-                    {syllabus.slice(0, 3).map((s, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-400" />
-                        <span className="line-clamp-1">{s}</span>
+
+                  <ul className="mt-3 space-y-2">
+                    {syllabus.slice(0, 3).map((item, idx) => (
+                      <li
+                        key={`${id || index}-syllabus-${idx}`}
+                        className="flex items-start gap-2 text-sm text-white/72"
+                      >
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-400" />
+                        <span className="line-clamp-1">{item}</span>
                       </li>
                     ))}
+
                     {syllabus.length > 3 && (
-                      <li className="text-xs text-white/55">
+                      <li className="text-xs text-white/50">
                         {t("more", { count: syllabus.length - 3 })}
                       </li>
                     )}
@@ -106,11 +158,12 @@ export default function CoursesGrid({ courses = [] }) {
                 </div>
               )}
 
+              {/* Footer */}
               <div className="mt-6 flex items-center justify-between gap-3">
                 <Link
-                  href={`/${locale}/courses/${course.id}`}
+                  href={`/${locale}/courses/${id}`}
                   className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-sm font-semibold text-white
-                    bg-white/[0.05] ring-1 ring-white/10 hover:bg-white/[0.08] hover:ring-white/20 transition"
+                  bg-white/[0.05] ring-1 ring-white/10 hover:bg-white/[0.08] hover:ring-white/20 transition"
                 >
                   {t("details")}
                   {isArabic ? (
@@ -123,19 +176,28 @@ export default function CoursesGrid({ courses = [] }) {
                 <Link
                   href={`/${locale}/contact`}
                   className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-sm font-semibold text-white
-                    bg-gradient-to-r from-fuchsia-500/90 via-purple-500/90 to-cyan-400/80
-                    shadow-[0_0_30px_rgba(217,70,239,0.18)]
-                    hover:shadow-[0_0_45px_rgba(34,211,238,0.18)] transition"
+                  bg-gradient-to-r from-fuchsia-500/90 via-purple-500/90 to-cyan-400/80
+                  shadow-[0_0_30px_rgba(217,70,239,0.18)]
+                  hover:shadow-[0_0_45px_rgba(34,211,238,0.18)] transition"
                 >
                   {t("enroll")}
                 </Link>
               </div>
             </div>
 
-            <div className="pointer-events-none absolute inset-0 rounded-[26px] shadow-[0_0_60px_rgba(34,211,238,0.06)]" />
-          </div>
+            <div className="pointer-events-none absolute inset-0 rounded-[28px] shadow-[0_0_60px_rgba(34,211,238,0.06)]" />
+          </article>
         );
       })}
     </div>
+  );
+}
+
+function MetaBadge({ icon, label, isArabic }) {
+  return (
+    <span className="inline-flex items-center rounded-full bg-white/[0.06] ring-1 ring-white/10 px-3 py-1 text-xs text-white/80">
+      <span className={isArabic ? "ml-2" : "mr-2"}>{icon}</span>
+      {label}
+    </span>
   );
 }

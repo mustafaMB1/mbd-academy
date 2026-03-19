@@ -1,1 +1,1 @@
-export const baseUrl = 'https://mbd-academy.onrender.com'  
+export const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";

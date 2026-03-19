@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { trainersSrvis } from "@/services/trainersServis";
 import Image from "next/image";
+import trainerimage from 'public/images/default-trainer.png' 
 import { useLocale } from "next-intl";
 import { FaUser, FaBookOpen, FaStar, FaSpinner } from "react-icons/fa";
 import { MdFolderSpecial } from "react-icons/md";
@@ -37,7 +38,7 @@ export default function TrainerDetails() {
   const [loading, setLoading] = useState(true);
 
   // ✅ fallback لو الصورة فشلت
-  const [imgSrc, setImgSrc] = useState("/images/default-trainer.png");
+ const [imgSrc, setImgSrc] = useState(trainerimage);
 
   useEffect(() => {
     if (id) fetchTrainer();
@@ -49,7 +50,8 @@ export default function TrainerDetails() {
     try {
       const res = await trainersSrvis.getOne(id);
       const data = res?.data ?? res;
-
+      console.log(data);
+      
       setTrainer(data || null);
 
       // ✅ حط الصورة بعد التطبيع
@@ -116,7 +118,7 @@ export default function TrainerDetails() {
               fill
               className="object-cover"
               priority
-              onError={() => setImgSrc("/images/default-trainer.png")}
+              onError={() => setImgSrc(trainerimage)}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-[#070A16]/95" />
 
@@ -128,7 +130,7 @@ export default function TrainerDetails() {
                   alt={name || "Trainer"}
                   fill
                   className="object-cover"
-                  onError={() => setImgSrc("/images/default-trainer.png")}
+                  onError={() => setImgSrc(trainerimage)}
                 />
               </div>
             </div>
