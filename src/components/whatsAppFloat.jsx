@@ -7,7 +7,7 @@ export default function WhatsAppFloat() {
   const formattedNumber = "963952684662"; // مثال: سوريا
 
   const message = encodeURIComponent(
-    "Hello 👋 How can we help you today?"
+    "I would like to inquire about the services you offer."
   );
 
   const whatsappLink = `https://wa.me/${formattedNumber}?text=${message}`;
