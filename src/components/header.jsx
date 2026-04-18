@@ -72,7 +72,7 @@ export default function Header() {
         <div className="relative border-b border-white/10 bg-white/[0.04] backdrop-blur-xl">
           <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
             {/* Top bar */}
-            <div className="flex flex-col gap-3 py-0 md:py-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col gap-3 pt-1 py-0 md:py-3 md:flex-row md:items-center md:justify-between">
               {/* Logo */}
               <Link
                 href={`/${currentLocale}/`}
