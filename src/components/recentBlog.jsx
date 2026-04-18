@@ -137,7 +137,7 @@ export default async function RecentBlog({ isMargin }) {
                   </div>
                 )}
 
-                <div className="relative p-6 pt-14">
+                <div className="relative p-6 pt-24">
                   {/* Title */}
                   <h3 className="text-lg font-extrabold text-white line-clamp-2">
                     {title}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import {
   FaTag,
   FaLayerGroup,
@@ -13,6 +14,9 @@ import {
 } from "react-icons/fa";
 
 export default function CoursesGrid({ courses = [] }) {
+  const pathname = usePathname();
+  const phoneNumber = "0952684662";
+   const currentLocale = pathname.startsWith("/ar") ? "ar" : "en";
   const locale = useLocale();
   const isArabic = locale === "ar";
   const t = useTranslations("CoursesAvailable");
@@ -173,7 +177,7 @@ export default function CoursesGrid({ courses = [] }) {
                   )}
                 </Link>
 
-                <Link
+                {/* <Link
                   href={`/${locale}/contact`}
                   className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-sm font-semibold text-white
                   bg-gradient-to-r from-fuchsia-500/90 via-purple-500/90 to-cyan-400/80
@@ -181,7 +185,22 @@ export default function CoursesGrid({ courses = [] }) {
                   hover:shadow-[0_0_45px_rgba(34,211,238,0.18)] transition"
                 >
                   {t("enroll")}
-                </Link>
+                </Link>  */}
+                               <a
+                  href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+                    currentLocale === "ar" ? `اريد التسجيل على هذا الكورس ${title}` : `i need book this course ${title}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                 className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-sm font-semibold text-white
+                  bg-gradient-to-r from-fuchsia-500/90 via-purple-500/90 to-cyan-400/80
+                  shadow-[0_0_30px_rgba(217,70,239,0.18)]
+                  hover:shadow-[0_0_45px_rgba(34,211,238,0.18)] transition"
+                >
+                  <span className="opacity-95 group-hover:opacity-100">
+                    {currentLocale === "ar" ? "قدّم الآن" : "Apply Now"}
+                  </span>
+                </a>
               </div>
             </div>
 

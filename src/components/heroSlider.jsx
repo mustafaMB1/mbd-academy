@@ -25,7 +25,7 @@ export default function HeroSlider() {
   }, []);
 
   return (
-    <section className="relative mt-37 overflow-hidden bg-[#070A16] before:absolute before:top-0 before:left-0 before:bg-black/40 before:w-full before:h-full">
+    <section className="relative mt-[112px] md:mt-[157px] overflow-hidden bg-[#070A16] before:absolute before:top-0 before:left-0 before:bg-black/40 before:w-full before:h-full">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image

@@ -91,7 +91,7 @@ export default function ArticleDetails() {
 
   return (
     <section
-      className="relative py-16 mt-[157px] bg-[#070A16] text-white overflow-hidden"
+      className="relative py-16 mt-[112px] md:mt-[157px] bg-[#070A16] text-white overflow-hidden"
       dir={isArabic ? "rtl" : "ltr"}
     >
       <BgDecor />

@@ -59,7 +59,7 @@ export default function ContactPage() {
   return (
     <section
       dir={isAr ? "rtl" : "ltr"}
-      className="relative mt-[156px] overflow-hidden bg-[#070A16] text-white py-14 md:py-18"
+      className="relative mt-[112px] md:mt-[156px] overflow-hidden bg-[#070A16] text-white py-14 md:py-18"
     >
       {/* Background (dots + blobs) */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.07] bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.6)_1px,transparent_0)] [background-size:18px_18px]" />

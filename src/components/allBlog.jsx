@@ -41,8 +41,8 @@ export default async function AllBlog({ isMargin }) {
 
   const sectionClass = [
     "relative overflow-hidden",
-    "py-16",
-    isMargin ? "mt-[157px]" : "mt-[157px]",
+    "py-8",
+    "mt-[112px] md:mt-[157px]",
     "bg-[#070A16] text-white",
   ].join(" ");
 
@@ -146,7 +146,7 @@ export default async function AllBlog({ isMargin }) {
                   </div>
 
                   {/* title */}
-                  <h3 className="mt-5 text-lg font-extrabold text-white line-clamp-2 text-center">
+                  <h3 className="mt-16 text-lg font-extrabold text-white line-clamp-2 text-center">
                     {title}
                   </h3>
 

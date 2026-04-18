@@ -41,7 +41,7 @@ export default async function Courses() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[#070A16] py-20 mt-[156px] text-white">
+    <section className="relative overflow-hidden bg-[#070A16] py-20 mt-[112px] md:mt-[156px] text-white">
       <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.6)_1px,transparent_0)] [background-size:18px_18px]" />
       <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-gradient-to-br from-fuchsia-600/22 via-purple-600/16 to-cyan-400/12 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-28 -left-24 h-96 w-96 rounded-full bg-gradient-to-br from-cyan-400/14 via-blue-500/12 to-fuchsia-600/16 blur-3xl" />

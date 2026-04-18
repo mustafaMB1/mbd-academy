@@ -40,7 +40,7 @@ export default function AboutPage() {
 
   return (
     <section
-      className="relative mt-[156px] overflow-hidden bg-[#070A16] text-white"
+      className="relative mt-[112px] md:mt-[156px] overflow-hidden bg-[#070A16] text-white"
       dir={isAr ? "rtl" : "ltr"}
     >
       {/* Background: dots + glow blobs */}

@@ -56,7 +56,7 @@ export default async function Trainers({ isMargin }) {
 
   return (
     <section
-      className={`py-20 ${isMargin ? "mt-[159px]" : ""} bg-[#070A16]`}
+      className={`pb-5 md:py-20 ${isMargin ? "mt-[159px]" : ""} bg-[#070A16]`}
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header مثل أقسام الموقع */}
